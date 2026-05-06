@@ -1,56 +1,20 @@
-import { useState } from 'react'
-import SearchBar from './components/SearchBar'
-import FoodList from './components/FoodList'
+import { Routes, Route } from 'react-router-dom'
+import NavBar from './components/NavBar'
+import HomePage from './pages/HomePage'
+import DetailPage from './pages/DetailPage'
+import SavedPage from './pages/SavedPage'
 
 function App() {
-  const [results, setResults] = useState([])
-  const [loading, setLoading] = useState(false)
-
-  const handleSearch = async (query) => {
-  setLoading(true)
-
-  try {
-    const url = `https://world.openfoodfacts.org/cgi/search.pl?search_terms=${encodeURIComponent(query)}&json=1&page_size=10`
-    const response = await fetch(url)
-    const data = await response.json()
-
-    // Filter out products with no name
-    const filteredProducts = data.products.filter(
-      (p) => p.product_name && p.product_name.trim() !== ""
-    )
-
-    setResults(filteredProducts)
-  } catch (error) {
-    console.error("Something went wrong:", error)
-    setResults([])
-  } finally {
-    setLoading(false)
-  }
-}
-
-
   return (
     <div>
-      <h1>🥗 FoodFacts</h1>
-      <SearchBar onSearch={handleSearch} />
-
-      {/* State 1: Before any search */}
-      {!loading && results.length === 0 && (
-        <p>Search for a food above to see its nutrition info.</p>
-      )}
-
-      {/* State 2: During a search */}
-      {loading && <p>Loading...</p>}
-
-      {/* State 3: After a search with results */}
-      {!loading && results.length > 0 && (
-        <FoodList products={results} />
-      )}
-
-      {/* State 4: After a search with no results */}
-      {!loading && results.length === 0 && (
-        <p>No results found. Try a different search.</p>
-      )}
+      <NavBar />
+      <main>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/product/:barcode" element={<DetailPage />} />
+          <Route path="/saved" element={<SavedPage />} />
+        </Routes>
+      </main>
     </div>
   )
 }
