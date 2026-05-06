@@ -35,7 +35,6 @@ function DetailPage({ saved, dispatch }) {
     }
 
     fetchProduct()
-
     return () => {
       cancelled = true
     }

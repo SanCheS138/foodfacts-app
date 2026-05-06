@@ -27,13 +27,10 @@ function useFoodSearch() {
       setResults(filtered)
     } catch (err) {
       if (err.response) {
-        // Server responded with a non‑2xx status
         setError(`Server error: ${err.response.status}. Please try again.`)
       } else if (err.request) {
-        // Request made but no response received (likely offline)
         setError('Network error. Check your connection and try again.')
       } else {
-        // Something else went wrong
         setError('Something went wrong. Please try again.')
       }
       setResults([])
