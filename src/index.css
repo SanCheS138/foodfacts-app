@@ -98,3 +98,97 @@ button {
 button:hover {
   background: #245646;
 }
+/* NavBar */
+.navbar {
+  position: sticky;
+  top: 0;
+  background: #fdfcf7;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1.5rem;
+  border-bottom: 1px solid #ddd;
+  z-index: 1000;
+}
+
+.nav-logo {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #1a3d2f;
+}
+
+.nav-links a {
+  margin-left: 1rem;
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+}
+
+.nav-links a.active {
+  color: #1a3d2f;
+  border-bottom: 2px solid #1a3d2f;
+}
+
+/* Badge */
+.badge {
+  display: inline-block;
+  background-color: #d9534f;
+  color: #fff;
+  border-radius: 50%;
+  padding: 0.25em 0.6em;
+  font-size: 0.75rem;
+  margin-left: 0.4em;
+  font-weight: bold;
+}
+
+/* Detail Page */
+.detail-page {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.detail-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.detail-header img {
+  max-width: 120px;
+  border-radius: 6px;
+}
+
+/* Nutrition Table */
+.nutrition-table {
+  margin-top: 1.5rem;
+}
+
+.nutrition-table ul {
+  list-style: none;
+  padding: 0;
+}
+
+.nutrition-table li {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.25rem 0;
+  border-bottom: 1px solid #eee;
+}
+
+/* Validation */
+.validation-error {
+  color: #d9534f;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
+
+/* Pages */
+.page {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 1rem;
+}
