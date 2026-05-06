@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
-function DetailPage() {
+function DetailPage({ saved, dispatch }) {
   const { barcode } = useParams()
   const navigate = useNavigate()
 
@@ -11,27 +11,34 @@ function DetailPage() {
   const [error, setError] = useState(null)
 
   useEffect(() => {
+    let cancelled = false
+
     const fetchProduct = async () => {
-      setLoading(true)
-      setError(null)
-
       try {
-        const url = `https://world.openfoodfacts.org/api/v0/product/${barcode}.json`
-        const response = await axios.get(url)
-
-        if (response.data && response.data.product) {
-          setProduct(response.data.product)
-        } else {
-          setError('Product not found.')
+        const response = await axios.get(
+          `https://world.openfoodfacts.org/api/v0/product/${barcode}.json`
+        )
+        if (!cancelled) {
+          if (response.data && response.data.product) {
+            setProduct(response.data.product)
+          } else {
+            setError('Product not found.')
+          }
+          setLoading(false)
         }
       } catch (err) {
-        setError('Failed to fetch product details. Please try again.')
-      } finally {
-        setLoading(false)
+        if (!cancelled) {
+          setError('Could not load product details.')
+          setLoading(false)
+        }
       }
     }
 
     fetchProduct()
+
+    return () => {
+      cancelled = true
+    }
   }, [barcode])
 
   if (loading) return <p>Loading product details...</p>
@@ -39,12 +46,14 @@ function DetailPage() {
   if (!product) return <p>Product not found.</p>
 
   const { product_name, brands, image_url, nutriments } = product
+  const isSaved = saved.some(p => p.code === barcode)
 
-  const handleSave = () => {
-    // For now, just log or store in localStorage
-    const saved = JSON.parse(localStorage.getItem('savedProducts') || '[]')
-    localStorage.setItem('savedProducts', JSON.stringify([...saved, product]))
-    alert('Product saved!')
+  const handleSaveToggle = () => {
+    if (isSaved) {
+      dispatch({ type: 'REMOVE', code: barcode })
+    } else {
+      dispatch({ type: 'ADD', product })
+    }
   }
 
   return (
@@ -70,7 +79,9 @@ function DetailPage() {
         </ul>
       </div>
 
-      <button onClick={handleSave}>Save to My List</button>
+      <button onClick={handleSaveToggle}>
+        {isSaved ? '★ Remove from Saved' : '☆ Save to My List'}
+      </button>
     </div>
   )
 }
