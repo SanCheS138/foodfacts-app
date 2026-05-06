@@ -7,10 +7,7 @@ function SavedPage({ saved, dispatch }) {
     return (
       <div className="page">
         <h2>Saved Items</h2>
-        <p>
-          You haven't saved anything yet. Search for a food and save it from the
-          detail page.
-        </p>
+        <p>You haven't saved anything yet. Search for a food and save it from the detail page.</p>
       </div>
     )
   }
@@ -23,19 +20,11 @@ function SavedPage({ saved, dispatch }) {
           <div key={product.code} className="saved-item">
             <h3>{product.product_name}</h3>
             <p>{product.brands}</p>
-
             <div className="saved-actions">
-              {/* Navigate to detail page */}
               <button onClick={() => navigate(`/product/${product.code}`)}>
                 View Details
               </button>
-
-              {/* Remove from saved */}
-              <button
-                onClick={() =>
-                  dispatch({ type: 'REMOVE', code: product.code })
-                }
-              >
+              <button onClick={() => dispatch({ type: 'REMOVE', code: product.code })}>
                 Remove
               </button>
             </div>

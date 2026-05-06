@@ -18,14 +18,12 @@ function savedReducer(state, action) {
       return state
   }
 }
-<NavBar savedCount={saved.length} />
 
 function App() {
   const [saved, dispatch] = useReducer(savedReducer, [])
 
   return (
     <div>
-      {/* Pass savedCount as a prop */}
       <NavBar savedCount={saved.length} />
       <main>
         <Routes>
